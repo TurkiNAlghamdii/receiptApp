@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./RecipeSearch.css";
 import RecipeDetails from "./RecipeDetails"; // Import RecipeDetails component
@@ -7,6 +7,32 @@ const RecipeSearch = () => {
   const [query, setQuery] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [darkMode, setDarkMode] = useState(false); // New state for dark mode
+
+  // Function to toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode((prevMode) => {
+      const newMode = !prevMode;
+      localStorage.setItem("darkMode", newMode); // Persist dark mode preference
+      return newMode;
+    });
+  };
+
+  // Apply dark mode class to body when darkMode state changes
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("darkMode");
+    if (savedTheme === "true") {
+      setDarkMode(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [darkMode]);
 
   const fetchRecipes = async () => {
     const API_KEY = "8c8e0cada25344f4b98cbce780007955";
@@ -40,6 +66,11 @@ const RecipeSearch = () => {
 
   return (
     <div className="recipe-search">
+      {/* Dark Mode Toggle Button */}
+      <button onClick={toggleDarkMode} className="dark-mode-toggle">
+        {darkMode ? "☼" : "☾"}
+      </button>
+
       {!selectedRecipe ? (
         <>
           <div className="search-bar">

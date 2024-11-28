@@ -4,7 +4,7 @@ import RecipeSearch from "./RecipeSearch.jsx";
 function App() {
   return (
     <div>
-      <h1>Recipe Search App</h1>
+      <h1 className="mainH">Recipe Search App</h1>
       <RecipeSearch />
     </div>
   );

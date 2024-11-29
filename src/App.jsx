@@ -36,7 +36,7 @@ const App = () => {
         <button onClick={toggleDarkMode} className="dark-mode-toggle">
           {darkMode ? "☼" : "☾"}
         </button>
-        <h1 className="mainH">Recipe Search App</h1>
+        <h1 className="mainH">Recipe Master</h1>
       </div>
       <RecipeSearch darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
     </div>

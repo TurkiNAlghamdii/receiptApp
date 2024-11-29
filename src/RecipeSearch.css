@@ -1,94 +1,148 @@
-/* Default Light Mode Styles */
 body {
+  font-family: 'Inter', sans-serif;
   background-color: #fff;
   color: #333;
-  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  
 }
 
 .recipe-search {
-  padding: 20px;
-  text-align: center;
-  position: relative; /* Makes sure that absolutely positioned elements inside this div are relative to it */
+  padding: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  transition: background-color 0.3s ease;
+  border-radius: 15px;
 }
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  position: relative;
+  padding-bottom: 0;
+}
+
+.search-bar input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 20px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s ease;
+  margin-top: -46px;
+}
+
+.search-bar input:focus {
+  border-color: #3498db;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 30px;
+  justify-items: center;
+  margin-top: 40px;
+  padding: 0 20px;
+}
+
 
 .recipe-card {
   background-color: #fff;
-  color: #333; /* Card text color */
-  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 300px;
   padding: 20px;
-  margin: 10px;
-  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-}
-
-.recipe-card h3 {
-  font-size: 1.25rem;
-  margin: 10px 0;
-  color: #2c3e50; /* Recipe title color */
 }
 
 .recipe-card img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
   border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 15px;
 }
 
-/* Dark Mode Toggle Button Styling */
-.dark-mode-toggle {
-  position: fixed; /* Fixed position to keep the button at the top-right of the screen */
-  top: 20px; /* Distance from the top */
-  right: 20px; /* Distance from the right */
-  background-color: #3498db;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 10%; /* Make the button circular */
-  font-size: 1.5rem; /* Larger icon for better visibility */
-  cursor: pointer;
-  z-index: 1000; /* Ensure it stays on top of other elements */
-  transition: background-color 0.3s ease;
+.recipe-card h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
 }
 
-.dark-mode-toggle:hover {
-  background-color: #2980b9; /* Hover color for the button */
+.recipe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Dark Mode Styles */
 body.dark-mode {
-  background-color: #2c3e50;
-  color: #ecf0f1;
-}
-
-body.dark-mode .recipe-search {
-  background-color: #34495e;
+  background-color: #1e1e1e;
+  color: #f5f5f5;
 }
 
 body.dark-mode .recipe-card {
   background-color: #34495e;
-  color: #ecf0f1; /* Text color inside the cards */
-  border: 1px solid #7f8c8d;
+  color: #ecf0f1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 body.dark-mode .recipe-card h3 {
-  color: #ecf0f1; /* Recipe title color in dark mode */
+  color: #ecf0f1;
 }
 
 body.dark-mode .recipe-card img {
-  border-radius: 8px;
+  border-radius: 12px;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
 }
 
-body.dark-mode .dark-mode-toggle {
-  background-color: #2980b9;
+body.dark-mode .recipe-card img:hover {
+  opacity: 1;
 }
 
-body.dark-mode .dark-mode-toggle:hover {
-  background-color: #1f6b99;
+
+.dark-mode-toggle span {
+  position: absolute;
+  width: 50%;
+  height: 80%;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
 }
 
-body.dark-mode h1 {
-  color: #ecf0f1; /* Ensure h1 (recipe title) is visible in dark mode */
+body.dark-mode .dark-mode-toggle span {
+  transform: translateX(100%);
 }
 
-body.dark-mode .recipe-card h3 {
-  color: #ecf0f1; /* Ensure h3 (card title) is visible in dark mode */
+.loading-spinner {
+  font-size: 1.5rem;
+  color: #3498db;
+  text-align: center;
+  margin-top: 30px;
+}
+
+body.dark-mode .no-results {
+  color: #ecf0f1;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 20px;
+}
+
+body .no-results {
+  color: #555;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 20px;
+}
+.noRecipesFound{
+  text-align: center;
 }

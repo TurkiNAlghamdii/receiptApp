@@ -1,5 +1,5 @@
 import React from "react";
-import DOMPurify from "dompurify"; // For sanitizing HTML
+import DOMPurify from "dompurify";
 import "./RecipeDetails.css";
 
 const RecipeDetails = ({ recipe, onBack }) => {

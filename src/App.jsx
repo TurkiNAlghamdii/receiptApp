@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
-import RecipeSearch from "./RecipeSearch"; // Import RecipeSearch component
+import RecipeSearch from "./RecipeSearch";
 import "./App.css";
 
 const App = () => {
-  const [darkMode, setDarkMode] = useState(false); // Dark mode state
+  const [darkMode, setDarkMode] = useState(false);
 
-  // Function to toggle dark mode
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => {
       const newMode = !prevMode;
-      localStorage.setItem("darkMode", newMode); // Persist dark mode preference
+      localStorage.setItem("darkMode", newMode);
       return newMode;
     });
   };
 
-  // Apply dark mode class to body when darkMode state changes
   useEffect(() => {
     const savedTheme = localStorage.getItem("darkMode");
     if (savedTheme === "true") {

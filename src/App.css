@@ -21,9 +21,8 @@
   flex-grow: 1;
 }
 
-/* Dark Mode Toggle Button */
 .dark-mode-toggle {
-  background-color: #2c3e50; /* Set a fixed background color */
+  background-color: #2c3e50;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -41,7 +40,7 @@
 }
 
 body.dark-mode .dark-mode-toggle {
-  background-color: #2c3e50; /* Keep the same background color for dark mode */
+  background-color: #2c3e50;
 }
 
 body.dark-mode .dark-mode-toggle:hover {

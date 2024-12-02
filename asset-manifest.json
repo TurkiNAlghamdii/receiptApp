@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/receiptApp/static/css/main.9809d498.css",
-    "main.js": "/receiptApp/static/js/main.0a3ad97f.js",
-    "static/js/453.11261805.chunk.js": "/receiptApp/static/js/453.11261805.chunk.js",
-    "index.html": "/receiptApp/index.html",
-    "main.9809d498.css.map": "/receiptApp/static/css/main.9809d498.css.map",
-    "main.0a3ad97f.js.map": "/receiptApp/static/js/main.0a3ad97f.js.map",
-    "453.11261805.chunk.js.map": "/receiptApp/static/js/453.11261805.chunk.js.map"
+    "main.css": "/static/css/main.986794e7.css",
+    "main.js": "/static/js/main.0d124575.js",
+    "static/js/453.11261805.chunk.js": "/static/js/453.11261805.chunk.js",
+    "index.html": "/index.html",
+    "main.986794e7.css.map": "/static/css/main.986794e7.css.map",
+    "main.0d124575.js.map": "/static/js/main.0d124575.js.map",
+    "453.11261805.chunk.js.map": "/static/js/453.11261805.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9809d498.css",
-    "static/js/main.0a3ad97f.js"
+    "static/css/main.986794e7.css",
+    "static/js/main.0d124575.js"
   ]
 }

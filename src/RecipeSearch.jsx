@@ -1,8 +1,12 @@
+// src/RecipeSearch.jsx
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "./RecipeSearch.css";
 import RecipeDetails from "./RecipeDetails";
 import FilterAndSort from "./FilterAndSort";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { auth } from "./firebase"; // Import auth for logout functionality
+import { signOut } from "firebase/auth"; // Import signOut for logging out the user
 
 const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
   const [query, setQuery] = useState(""); // Current search query
@@ -17,7 +21,8 @@ const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
   // Debounced search query
   const [debouncedQuery, setDebouncedQuery] = useState(""); 
 
-  // Memoize fetchRecipes to prevent unnecessary re-renders
+  const navigate = useNavigate(); // for navigation
+
   const fetchRecipes = useCallback(async (searchQuery) => {
     if (!searchQuery) {
       setRecipes([]);
@@ -78,6 +83,16 @@ const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
     setSelectedRecipe(null);
   };
 
+  // Logout handler
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      localStorage.removeItem("user");  // Clear user from localStorage
+      navigate("/login"); // Navigate to login page
+    }).catch((error) => {
+      console.error("Error signing out: ", error);
+    });
+  };
+
   // Debounce the search query (update `debouncedQuery` after typing)
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -89,6 +104,22 @@ const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
 
   return (
     <div className={`recipe-search ${darkMode ? "dark-mode" : ""}`}>
+      {/* Header: Contains Profile, Logout, and Dark Mode Toggle */}
+      <header className="main-header">
+        <h1>Recipe Search App</h1>
+        <div className="header-actions">
+          <button onClick={() => navigate("/profile")} className="profile-btn">
+            Profile
+          </button>
+          <button onClick={handleLogout} className="logout-btn">
+            Logout
+          </button>
+          <button onClick={toggleDarkMode} className="dark-mode-toggle">
+            {darkMode ? "☼" : "☾"}
+          </button>
+        </div>
+      </header>
+
       {!selectedRecipe ? (
         <>
           <div className="search-bar">
@@ -100,7 +131,6 @@ const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
             />
           </div>
 
-          {/* Filter and Sort Component */}
           <FilterAndSort
             cuisine={cuisine}
             diet={diet}

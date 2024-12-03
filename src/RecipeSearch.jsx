@@ -1,36 +1,29 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import axios from "axios";
 import "./RecipeSearch.css";
 import RecipeDetails from "./RecipeDetails";
 import FilterAndSort from "./FilterAndSort";
 
-const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
-  const [query, setQuery] = useState(""); // Current search query
+const RecipeSearch = ({ darkMode }) => {
+  const [query, setQuery] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
-
   const [cuisine, setCuisine] = useState("");
   const [diet, setDiet] = useState("");
   const [maxTime, setMaxTime] = useState("");
   const [sortBy, setSortBy] = useState("popularity");
 
-  // Debounced search query
-  const [debouncedQuery, setDebouncedQuery] = useState(""); 
+  const fetchRecipes = useCallback(async () => {
+    if (!query && !cuisine && !diet && !maxTime) return;
 
-  // Memoize fetchRecipes to prevent unnecessary re-renders
-  const fetchRecipes = useCallback(async (searchQuery) => {
-    if (!searchQuery) {
-      setRecipes([]);
-      return;
-    }
+    const API_KEY = "57f67b00279a4e218e02dafd8bfce273";
+    let URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=30`;
 
-    const API_KEY = "8c8e0cada25344f4b98cbce780007955"; 
-    let URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${searchQuery}&number=30`;
-
+    if (query) URL += `&query=${query}`;
     if (cuisine) URL += `&cuisine=${cuisine}`;
     if (diet) URL += `&diet=${diet}`;
     if (maxTime) URL += `&maxReadyTime=${maxTime}`;
-    URL += `&sort=${sortBy}`;
+    if (sortBy) URL += `&sort=${sortBy}`;
 
     try {
       const response = await axios.get(URL);
@@ -38,11 +31,7 @@ const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
     } catch (error) {
       console.error("Error fetching recipes:", error);
     }
-  }, [cuisine, diet, maxTime, sortBy]);
-
-  useEffect(() => {
-    fetchRecipes(debouncedQuery); // Fetch recipes when debounced query changes
-  }, [debouncedQuery, fetchRecipes]);
+  }, [query, cuisine, diet, maxTime, sortBy]);
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
@@ -60,7 +49,7 @@ const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
   };
 
   const fetchRecipeDetails = async (id) => {
-    const API_KEY = "8c8e0cada25344f4b98cbce780007955";
+    const API_KEY = "57f67b00279a4e218e02dafd8bfce273";
     const URL = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`;
     try {
       const response = await axios.get(URL);
@@ -78,14 +67,18 @@ const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
     setSelectedRecipe(null);
   };
 
-  // Debounce the search query (update `debouncedQuery` after typing)
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      setDebouncedQuery(query); // Set the debounced query after delay
-    }, 500);
+  const resetFilters = () => {
+    setCuisine("");
+    setDiet("");
+    setMaxTime("");
+    setSortBy("popularity");
+    setQuery("");
+    setRecipes([]);
+  };
 
-    return () => clearTimeout(timerId); // Clean up the timeout
-  }, [query]);
+  const handleSearch = () => {
+    fetchRecipes();
+  };
 
   return (
     <div className={`recipe-search ${darkMode ? "dark-mode" : ""}`}>
@@ -98,9 +91,11 @@ const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
               value={query}
               onChange={handleInputChange}
             />
+            <button className="search-btn" onClick={handleSearch}>
+              Search
+            </button>
           </div>
 
-          {/* Filter and Sort Component */}
           <FilterAndSort
             cuisine={cuisine}
             diet={diet}
@@ -110,25 +105,27 @@ const RecipeSearch = ({ darkMode, toggleDarkMode }) => {
             onSortChange={handleSortChange}
           />
 
+          <button className="reset-filters" onClick={resetFilters}>
+            Reset Filters
+          </button>
+
           <div className="recipe-grid">
-            {recipes.length > 0 ? (
-              recipes.map((recipe) => (
-                <div
-                  key={recipe.id}
-                  className="recipe-card"
-                  onClick={() => handleCardClick(recipe.id)}
-                >
-                  <h3>{recipe.title}</h3>
-                  <img src={recipe.image} alt={recipe.title} />
-                </div>
-              ))
-            ) : (
-              debouncedQuery && (
-                <p className="noRecipesFound">
-                  No recipes found. Try searching for something else.
-                </p>
-              )
-            )}
+            {recipes.length > 0
+              ? recipes.map((recipe) => (
+                  <div
+                    key={recipe.id}
+                    className="recipe-card"
+                    onClick={() => handleCardClick(recipe.id)}
+                  >
+                    <h3>{recipe.title}</h3>
+                    <img src={recipe.image} alt={recipe.title} />
+                  </div>
+                ))
+              : query && (
+                  <p className="noRecipesFound">
+                    No recipes found. Try searching for something else.
+                  </p>
+                )}
           </div>
         </>
       ) : (

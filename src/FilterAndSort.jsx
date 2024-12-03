@@ -9,7 +9,11 @@ const FilterAndSort = ({ cuisine, diet, maxTime, sortBy, onFilterChange, onSortC
         <option value="Italian">Italian</option>
         <option value="Mexican">Mexican</option>
         <option value="Asian">Asian</option>
-        {/* Add more options */}
+        <option value="American">American</option>
+        <option value="Indian">Indian</option>
+        <option value="Mediterranean">Mediterranean</option>
+        <option value="French">French</option>
+        <option value="Middle Eastern">Middle Eastern</option>
       </select>
 
       <select name="diet" value={diet} onChange={onFilterChange}>
@@ -17,21 +21,27 @@ const FilterAndSort = ({ cuisine, diet, maxTime, sortBy, onFilterChange, onSortC
         <option value="vegetarian">Vegetarian</option>
         <option value="vegan">Vegan</option>
         <option value="gluten free">Gluten Free</option>
-        {/* Add more options */}
+        <option value="ketogenic">Ketogenic</option>
+        <option value="paleo">Paleo</option>
+        <option value="dairy free">Dairy Free</option>
+        <option value="low carb">Low Carb</option>
       </select>
 
       <select name="maxTime" value={maxTime} onChange={onFilterChange}>
         <option value="">Max Time (in minutes)</option>
         <option value="30">30 min</option>
         <option value="60">60 min</option>
+        <option value="90">90 min</option>
         <option value="120">120 min</option>
-        {/* Add more options */}
+        <option value="150">150 min</option>
       </select>
 
       <div className="sorting">
         <select value={sortBy} onChange={onSortChange}>
           <option value="popularity">Sort by Popularity</option>
           <option value="readyInMinutes">Sort by Preparation Time</option>
+          <option value="healthScore">Sort by Health Score</option>
+          <option value="pricePerServing">Sort by Price Per Serving</option>
         </select>
       </div>
     </div>
